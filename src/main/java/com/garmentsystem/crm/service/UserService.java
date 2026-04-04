@@ -1,5 +1,8 @@
 package com.garmentsystem.crm.service;
 
+import com.garmentsystem.crm.config.JwtService;
+import com.garmentsystem.crm.dto.LoginRequest;
+import com.garmentsystem.crm.dto.LoginResponse;
 import com.garmentsystem.crm.dto.RegisterRequest;
 import com.garmentsystem.crm.dto.UserResponse;
 import com.garmentsystem.crm.model.Role;
@@ -15,6 +18,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public UserResponse register(RegisterRequest request) {
 
@@ -41,6 +45,21 @@ public class UserService {
                 .email(user.getEmail())
                 .phone(user.getPhone())
                 .role(user.getRole())
+                .build();
+    }
+
+    public LoginResponse login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Passwords don't match");
+        }
+
+        String token = jwtService.generateToken(user);
+
+        return LoginResponse.builder()
+                .token(token)
                 .build();
     }
 }
