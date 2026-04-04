@@ -1,5 +1,7 @@
 package com.garmentsystem.crm.controller;
 
+import com.garmentsystem.crm.dto.LoginRequest;
+import com.garmentsystem.crm.dto.LoginResponse;
 import com.garmentsystem.crm.dto.RegisterRequest;
 import com.garmentsystem.crm.dto.UserResponse;
 import com.garmentsystem.crm.service.UserService;
@@ -17,5 +19,10 @@ public class AuthController {
     @PostMapping("/register")
     public UserResponse register(@Valid @RequestBody RegisterRequest request) {
         return userService.register(request);
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(@RequestBody LoginRequest request) {
+        return userService.login(request);
     }
 }
