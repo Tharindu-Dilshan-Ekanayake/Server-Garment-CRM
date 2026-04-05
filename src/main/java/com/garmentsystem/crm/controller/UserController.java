@@ -2,6 +2,7 @@ package com.garmentsystem.crm.controller;
 
 import com.garmentsystem.crm.model.User;
 import com.garmentsystem.crm.repository.UserRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -42,6 +44,7 @@ public class UserController {
             if (user.getEmail() != null) existingUser.setEmail(user.getEmail());
             if (user.getPhone() != null) existingUser.setPhone(user.getPhone());
             if (user.getRole() != null) existingUser.setRole(user.getRole());
+            if (user.getPosition() != null) existingUser.setPosition(user.getPosition());
             return userRepository.save(existingUser);
         }
     }

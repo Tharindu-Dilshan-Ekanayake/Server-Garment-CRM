@@ -26,6 +26,7 @@ public class JwtService {
                 .claim("name", user.getName())
                 .claim("phone", user.getPhone())
                 .claim("role", user.getRole())
+                .claim("position", user.getPosition())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
@@ -64,6 +65,11 @@ public class JwtService {
     // extract role
     public String extractRole(String token) {
         return extractAllClaims(token).get("role", String.class);
+    }
+
+    // extract position
+    public String extractPosition(String token) {
+        return extractAllClaims(token).get("position", String.class);
     }
 
     // ⏳ Check token expired
