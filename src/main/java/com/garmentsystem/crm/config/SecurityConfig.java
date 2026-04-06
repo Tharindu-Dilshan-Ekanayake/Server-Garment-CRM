@@ -26,6 +26,8 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/api/auth/register").hasAnyRole("ADMIN")
                         .requestMatchers("/api/users/**").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/api/task/create-task").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/api/task/get-task").hasAnyRole("ADMIN", "MANAGER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

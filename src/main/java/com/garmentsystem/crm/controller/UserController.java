@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-@SecurityRequirement(name = "bearerAuth")
+
 public class UserController {
 
     private final UserRepository userRepository;
@@ -24,6 +24,7 @@ public class UserController {
 
     //get user by id
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public User getUserById(@PathVariable Long id) {
         if (!userRepository.existsById(id)) {
             throw new RuntimeException("user not found");
