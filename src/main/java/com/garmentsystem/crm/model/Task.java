@@ -23,8 +23,6 @@ public class Task {
 
     private Integer itemQuantity;
 
-    private Long qmId;
-
     private Long groupLeaderId;
 
     @Enumerated(EnumType.STRING)
