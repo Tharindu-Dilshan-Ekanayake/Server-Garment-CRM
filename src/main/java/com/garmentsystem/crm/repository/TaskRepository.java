@@ -14,9 +14,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     // Get tasks by group leader
     List<Task> findByGroupLeaderId(Long groupLeaderId);
 
-    // Get tasks by QM
-    List<Task> findByQmId(Long qmId);
-
     // Optional: filter by status + leader
     List<Task> findByStatusAndGroupLeaderId(TaskStatus status, Long groupLeaderId);
 }

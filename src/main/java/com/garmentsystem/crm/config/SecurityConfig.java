@@ -22,12 +22,16 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/api/auth/login"
+                                "/api/auth/login",
+                                "/api/task/get-task/{id}"
                         ).permitAll()
                         .requestMatchers("/api/auth/register").hasAnyRole("ADMIN")
                         .requestMatchers("/api/users/**").hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers("/api/task/create-task").hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers("/api/task/get-task").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/api/task/delete/{id}").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/api/task/update/{id}").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/api/task/tasks-assignment/{id}").hasAnyRole("ADMIN", "MANAGER", "WORKER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
