@@ -1,5 +1,6 @@
 package com.garmentsystem.crm.dto;
 
+import com.garmentsystem.crm.model.Position;
 import com.garmentsystem.crm.model.Role;
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +14,5 @@ public class UserResponse {
     private String email;
     private String phone;
     private Role role;
+    private Position position;
 }

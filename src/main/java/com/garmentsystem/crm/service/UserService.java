@@ -5,6 +5,7 @@ import com.garmentsystem.crm.dto.LoginRequest;
 import com.garmentsystem.crm.dto.LoginResponse;
 import com.garmentsystem.crm.dto.RegisterRequest;
 import com.garmentsystem.crm.dto.UserResponse;
+import com.garmentsystem.crm.model.Position;
 import com.garmentsystem.crm.model.Role;
 import com.garmentsystem.crm.model.User;
 import com.garmentsystem.crm.repository.UserRepository;
@@ -34,6 +35,7 @@ public class UserService {
                 .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.WORKER) // default role
+                .position(Position.THIRD) // default position
                 .build();
 
         userRepository.save(user);
@@ -45,6 +47,7 @@ public class UserService {
                 .email(user.getEmail())
                 .phone(user.getPhone())
                 .role(user.getRole())
+                .position(user.getPosition())
                 .build();
     }
 
