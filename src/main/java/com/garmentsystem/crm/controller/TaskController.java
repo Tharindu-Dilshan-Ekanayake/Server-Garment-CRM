@@ -46,9 +46,9 @@ public class TaskController {
     //delete by id
     @DeleteMapping("/delete/{id}")
     @SecurityRequirement(name = "bearerAuth")
-    public String deleteTaskById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTaskById(@PathVariable Long id) {
         taskService.deleteTaskById(id);
-        return "Task deleted successfully";
+        return ResponseEntity.noContent().build();
     }
 
     //patch
