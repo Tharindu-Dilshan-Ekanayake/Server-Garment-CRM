@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,8 +57,25 @@ public class TaskService {
         return savedTask;
     }
 
-    public List getTasks() {
+    public List<Task> getTasks() {
         return taskRepository.findAll();
+    }
+
+    // get tasks by group leader id
+    public List<Task> getTasksByTeamLeaderId(Long groupLeaderId) {
+        return taskRepository.findByGroupLeaderId(groupLeaderId);
+    }
+
+    // get tasks assigned to a specific group member (not leader)
+    public List<Task> getTasksAssignedToMember(Long groupMemberId) {
+        return taskAssignmentRepository.findByGroupMemberId(groupMemberId)
+                .stream()
+                .map(TaskAssignment::getTask)
+                .filter(t -> t != null)
+                // if this user is the leader of the task, don't return it here (avoid duplicates with leader endpoint)
+                .filter(t -> t.getGroupLeaderId() == null || !t.getGroupLeaderId().equals(groupMemberId))
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     //get by id

@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 
@@ -21,20 +20,6 @@ public class GlobalExceptionHandler {
             String path
     ) {}
 
-    @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<ApiError> handleResponseStatusException(ResponseStatusException ex, HttpServletRequest request) {
-        HttpStatus status = HttpStatus.resolve(ex.getStatusCode().value());
-        if (status == null) status = HttpStatus.INTERNAL_SERVER_ERROR;
-
-        ApiError body = new ApiError(
-                Instant.now(),
-                status.value(),
-                status.getReasonPhrase(),
-                ex.getReason(),
-                request.getRequestURI()
-        );
-        return ResponseEntity.status(status).body(body);
-    }
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiError> handleAccessDenied(AccessDeniedException ex, HttpServletRequest request) {

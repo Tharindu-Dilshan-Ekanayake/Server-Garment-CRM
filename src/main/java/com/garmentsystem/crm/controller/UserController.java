@@ -1,5 +1,7 @@
 package com.garmentsystem.crm.controller;
 
+import com.garmentsystem.crm.dto.WorkerSummaryDTO;
+import com.garmentsystem.crm.model.Role;
 import com.garmentsystem.crm.model.User;
 import com.garmentsystem.crm.repository.UserRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -60,6 +62,15 @@ public class UserController {
 
         userRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    //get user == worker
+    @GetMapping("/getworker")
+    @SecurityRequirement(name = "bearerAuth")
+    public List<WorkerSummaryDTO> getWorkers() {
+        return userRepository.findByRole(Role.WORKER).stream()
+                .map(u -> new WorkerSummaryDTO(u.getId(), u.getName()))
+                .toList();
     }
 }
 
