@@ -29,17 +29,20 @@ public class SecurityConfig {
                         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(
                                 "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs",
                                 "/v3/api-docs/**",
                                 "/api/auth/login",
                                 "/api/task/get-task/{id}"
                         ).permitAll()
                         .requestMatchers("/api/auth/register").hasAnyRole("ADMIN")
-                        .requestMatchers("/api/users/**").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/api/users/**").hasAnyRole("ADMIN", "MANAGER", "WORKER")
                         .requestMatchers("/api/task/create-task").hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers("/api/task/get-task").hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers("/api/task/delete/{id}").hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers("/api/task/update/{id}").hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers("/api/task/tasks-assignment/{id}").hasAnyRole("ADMIN", "MANAGER", "WORKER")
+                        .requestMatchers("/api/task/gettask/teamleader/{userid}").hasAnyRole("ADMIN", "MANAGER", "WORKER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

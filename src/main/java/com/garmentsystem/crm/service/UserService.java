@@ -99,4 +99,18 @@ public class UserService {
                 .position(user.getPosition())
                 .build();
     }
+
+    //get user by user role = worker
+    public List<UserResponse> getWorkers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().filter(user -> user.getRole() == Role.WORKER )
+                .map(user -> UserResponse.builder()
+                        .id(user.getId())
+                        .name(user.getName())
+                        .email(user.getEmail())
+                        .phone(user.getPhone())
+                        .role(user.getRole())
+                        .position(user.getPosition())
+                        .build()).toList();
+    }
 }
