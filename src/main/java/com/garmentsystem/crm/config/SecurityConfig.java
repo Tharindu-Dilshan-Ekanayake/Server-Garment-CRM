@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/task/update/{id}").hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers("/api/task/tasks-assignment/{id}").hasAnyRole("ADMIN", "MANAGER", "WORKER")
                         .requestMatchers("/api/task/gettask/teamleader/{userid}").hasAnyRole("ADMIN", "MANAGER", "WORKER")
+                        .requestMatchers("/api/inventory/**").hasAnyRole("ADMIN", "MANAGER")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
